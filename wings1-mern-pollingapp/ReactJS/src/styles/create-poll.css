@@ -1,0 +1,29 @@
+.form-container {
+  background: #ffffff;
+  padding: 20px;
+  margin: 20px auto;
+  width: 400px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.option-input,
+.question-input {
+  width: 100%;
+  padding: 6px;
+}
+
+.form-button {
+  padding: 8px 16px;
+}

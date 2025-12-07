@@ -1,0 +1,19 @@
+.poll-container {
+  background: #ffffff;
+  padding: 20px;
+  margin: 20px auto;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.options-container {
+  margin-top: 20px;
+}
+
+.option-button {
+  display: block;
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 8px;
+}

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <h2 class="title">MERN Stack Library Book Borrowing System</h2>
+  <hr />
+
+  <div class="header">
+    <p class="item1">
+      <span>Library Book Borrowing System</span><br /><br />
+      Develop this application using <b>ReactJS</b> and <b>NodeJS</b>. Refer to this Problem Statement (and the
+      accompanying UI demo, if provided) for the complete requirements and expected behaviour.
+    </p>
+
+    <div class="item2">
+      <!-- Optional: Replace with actual asset path if a GIF is provided -->
+      <img src="assets/library-borrowing.gif" width="700" height="350" />
+    </div>
+  </div>
+
+  <h2 class="note">Note:</h2>
+  <hr />
+
+  <ul>
+    <li>To run the Full Stack application, execute the
+      <i class="commands"><strong>sh run.sh</strong></i> command from the
+      <b>wings-reactnode-libraryborrow1</b> directory.
+    </li>
+    <li>To test the Full Stack application, execute the
+      <i class="commands"><strong>sh test.sh</strong></i> command from the
+      <b>wings-reactnode-libraryborrow1</b> directory.
+    </li>
+    <li>After running the test command, if the <b>test-report.xml</b> file has not appeared either in the
+      <b>NodeJS</b> or <b>ReactJS</b> folder, click the <strong>'Refresh Icon'</strong> in the VS Code editor.</li>
+    <img class="refresh" src="assets/RefreshImg.png" />
+    <li>Use <strong>Fetch API</strong> for all service integration calls from the front end.</li>
+  </ul>
+
+  <!-- FRONT-END -->
+  <h2 class="title">FRONT-END: ReactJS</h2>
+  <hr />
+
+  <ul>
+    <li>This application uses <b>ReactJS</b> as the front-end framework.</li>
+    <li>You must fix the <b>test case errors</b> in the application. The test cases are written using
+      <b>Jest</b> and <b>React Testing Library</b>.
+    </li>
+    <li>The code for the front-end part is available in
+      <b><code>ReactJS/src/</code></b> and the components are available in
+      <b><code>ReactJS/src/components</code></b>.
+    </li>
+    <li>Refer to the respective component files for additional instructions and comments.</li>
+  </ul>
+
+  <h3>App Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/App.js</code></b>.</li>
+    <li>Acts as the higher-order component of the application.</li>
+    <li>Maintains the main state values required by child components, such as:
+      <ul>
+        <li><code>books</code> – the list of books fetched from the back end.</li>
+        <li><code>showModal</code> – flag to show or hide the modal for adding a new book.</li>
+        <li><code>formInputs</code> – object holding the values of form fields.</li>
+        <li><code>error</code> – error message (if any) to be displayed in the UI.</li>
+      </ul>
+    </li>
+    <li>On mounting, it should fetch the existing list of books from the back end using the
+      <b>fetchBooks</b> function.
+    </li>
+    <li>The following functions must be defined in the App component and passed as props wherever required:
+      <ul>
+        <li><b>fetchBooks</b> – Fetches book data from the backend using
+          <code>GET -&gt; /books</code>. It should update the <code>books</code> state.
+        </li>
+        <li><b>showModalHandler</b> – Sets <code>showModal</code> to <code>true</code> to open the modal.</li>
+        <li><b>closeModalHandler</b> – Sets <code>showModal</code> to <code>false</code> and clears any existing
+          errors and form inputs.</li>
+        <li><b>inputChangeHandler</b> – Handles <code>onChange</code> events from the form fields and updates
+          <code>formInputs</code>.
+        </li>
+        <li><b>submitHandler</b> – Validates the input fields and sends an API request
+          <code>POST -&gt; (http://localhost:8001/books)</code> to add a new book. On success, the modal should be
+          closed and the updated list must be fetched again.
+        </li>
+        <li><b>borrowHandler</b> – Sends an API request
+          <code>PATCH -&gt; (http://localhost:8001/books/borrow/:id)</code> to borrow a book. On success, refresh the
+          book list.
+        </li>
+        <li><b>returnHandler</b> – Sends an API request
+          <code>PATCH -&gt; (http://localhost:8001/books/return/:id)</code> to return a borrowed book. On success,
+          refresh the book list.
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Button Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Button.js</code></b>.</li>
+    <li>Is a reusable button component used across the application (e.g., Add, Save, Close, Borrow, Return).</li>
+    <li>Should accept props such as <b>label</b>, <b>type</b>, and <b>onClick</b> and render the respective button.
+    </li>
+  </ul>
+
+  <h3>Error Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Error.js</code></b>.</li>
+    <li>Is used to render error messages.</li>
+    <li>The prop to be passed is <b>message</b>. If <code>message</code> is empty, nothing should be displayed.</li>
+  </ul>
+
+  <h3>Modal Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Modal.js</code></b>.</li>
+    <li>Is used to display the form in a popup/modal view.</li>
+    <li>Contains the custom Button component to close the modal.</li>
+    <li>The props to be passed from the parent component are:
+      <b>show</b>, <b>children</b> and <b>closeHandler</b>.
+    </li>
+    <li>When <code>show</code> is <code>false</code>, the modal should not be visible on the screen.</li>
+  </ul>
+
+  <h3>Form Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Form.js</code></b>.</li>
+    <li>Contains the title in an <code>&lt;h3&gt;</code> tag, such as <b>"Add New Book"</b>.</li>
+    <li>Contains the <b>Error</b> component to display any error messages passed from the parent.</li>
+    <li>Contains labels and input fields for:
+      <ul>
+        <li><b>Title</b></li>
+        <li><b>Author</b></li>
+        <li><b>Category</b> – typically rendered as a dropdown or select box.</li>
+      </ul>
+    </li>
+    <li>On clicking the <b>Save</b> button, the information filled in the form should be validated and sent to the
+      backend. On a successful response, the modal should be closed.</li>
+    <li>The props to be passed from the parent component are:
+      <b>error</b>, <b>inputOnChangeHandler</b> and <b>onSaveHandler</b>.
+    </li>
+  </ul>
+
+  <h3>List Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/List.js</code></b>.</li>
+    <li>Is responsible for rendering the list of books in the UI.</li>
+    <li>Should loop through the array of books and render each one using the <b>Card</b> component.</li>
+    <li>The prop to be passed from the parent component is <b>data</b> (the array of books).</li>
+  </ul>
+
+  <h3>Card Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Card.js</code></b>.</li>
+    <li>Displays the data for a single book.</li>
+    <li>The props to be passed from the parent component are:
+      <b>_id</b>, <b>title</b>, <b>author</b>, <b>category</b>, <b>isBorrowed</b>, <b>borrowerName</b>,
+      <b>borrowDate</b>, <b>onBorrow</b>, and <b>onReturn</b>.
+    </li>
+    <li>If <code>isBorrowed</code> is <code>false</code>, it should display a <b>Borrow</b> button.</li>
+    <li>If <code>isBorrowed</code> is <code>true</code>, it should display a <b>Return</b> button along with text such
+      as
+      <i>"Borrowed by &lt;borrowerName&gt; on &lt;borrowDate&gt;"</i>.
+    </li>
+  </ul>
+
+  <!-- BACK-END -->
+  <h2 class="title">BACK-END: NodeJS</h2>
+  <hr />
+
+  <ul>
+    <li>For the back end, you must use <strong>NodeJS</strong> and <strong>MongoDB</strong>.</li>
+    <li>The sample and default data values are provided in
+      <b><code>NodeJS/src/db/defaultDB.js</code></b>.
+    </li>
+    <li><strong>library-db</strong> is the name of the database you will be using.</li>
+    <li>There is a single collection, <strong>books</strong>, in the database <b>library-db</b>.</li>
+  </ul>
+
+  <h3><strong>Models:</strong></h3>
+  <p>
+    The model file is located at
+    <b><code>NodeJS/src/models/books.js</code></b> and contains the following fields:
+  </p>
+  <ul>
+    <li><b>title</b> – String, minimum length of 3 characters.</li>
+    <li><b>author</b> – String, must contain only alphabets and spaces.</li>
+    <li><b>category</b> – String, must be one of:
+      <code>"Fiction"</code>, <code>"Science"</code>, <code>"History"</code>, <code>"Tech"</code>.
+    </li>
+    <li><b>isBorrowed</b> – Boolean, default value is <code>false</code>.</li>
+    <li><b>borrowerName</b> – String, optional, should be populated when a book is borrowed.</li>
+    <li><b>borrowDate</b> – Date, optional, indicates the date on which the book was borrowed.</li>
+  </ul>
+
+  <h3><strong>Routers:</strong></h3>
+
+  <p>
+    The routes are defined in <b><code>NodeJS/src/routers/books.js</code></b>.
+  </p>
+
+  <p><strong>1. GET <code>/books</code></strong> – Fetch books with optional filters.</p>
+  <p>The route should:</p>
+  <ul>
+    <li>Return the list of books from the <b>books</b> collection.</li>
+    <li>Support the following optional query parameters:
+      <ul>
+        <li><b>category</b> – Return only books that match the given category.</li>
+        <li><b>author</b> – Return only books by the specified author.</li>
+        <li><b>available</b> – If set to <code>true</code>, return only books where
+          <code>isBorrowed</code> is <code>false</code>; if <code>false</code>, return only borrowed books.
+        </li>
+      </ul>
+    </li>
+    <li>If no query parameters are passed, return all books.</li>
+    <li>On success, send a response with status code <b>200</b> in the following format:</li>
+  </ul>
+
+  <p><b>Sample Response:</b></p>
+  <pre><code class="lang-json">
+{
+  "count": 2,
+  "records": [
+    {
+      "_id": "60afb8e12345cbe12a67f91a",
+      "title": "The Silent Ocean",
+      "author": "James Nolan",
+      "category": "Fiction",
+      "isBorrowed": false,
+      "borrowerName": "",
+      "borrowDate": null
+    },
+    {
+      "_id": "60afb8e12345cbe12a67f91b",
+      "title": "Microservices Design",
+      "author": "Sam Turner",
+      "category": "Tech",
+      "isBorrowed": true,
+      "borrowerName": "Rohit Verma",
+      "borrowDate": "2023-11-10T00:00:00.000Z"
+    }
+  ]
+}
+  </code></pre>
+
+  <p>If something goes wrong while fetching books from the database, send an error message with
+    status code <b>400</b>:</p>
+  <pre><code class="lang-json">
+{
+  "error": "Unable to fetch book records"
+}
+  </code></pre>
+
+  <br />
+
+  <p><strong>2. POST <code>/books</code></strong> – Add a new book to the collection.</p>
+  <ul>
+    <li>This route should read the data from the request body and create a new document in the
+      <b>books</b> collection.
+    </li>
+    <li>Validate that:
+      <ul>
+        <li><b>title</b>, <b>author</b> and <b>category</b> are provided.</li>
+        <li><b>title</b> length is at least 3 characters.</li>
+        <li><b>author</b> contains only alphabets and spaces.</li>
+        <li><b>category</b> is one of the allowed values.</li>
+      </ul>
+    </li>
+    <li>If validation fails, return an error with status code <b>400</b>:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "error": "Invalid input. Please check all fields."
+}
+  </code></pre>
+
+  <p>If a new book is added successfully, send a response with status code <b>201</b>:</p>
+  <pre><code class="lang-json">
+{
+  "message": "Book added successfully.",
+  "book": {
+    "_id": "60afb8e12345cbe12a67f91c",
+    "title": "Clean Architecture",
+    "author": "Robert Martin",
+    "category": "Tech",
+    "isBorrowed": false,
+    "borrowerName": "",
+    "borrowDate": null
+  }
+}
+  </code></pre>
+
+  <br />
+
+  <p><strong>3. PATCH <code>/books/borrow/:id</code></strong> – Borrow a book.</p>
+  <ul>
+    <li>Read the <b>id</b> from the route parameter and <b>borrowerName</b> from the request body.</li>
+    <li>Validations:
+      <ul>
+        <li>If <code>borrowerName</code> is empty or contains only spaces, respond with:
+          <pre><code class="lang-json">
+{
+  "error": "Borrower name is required to borrow a book."
+}
+          </code></pre>
+        </li>
+        <li>If the book is already borrowed (<code>isBorrowed === true</code>), respond with status code
+          <b>403</b>:
+          <pre><code class="lang-json">
+{
+  "error": "This book has already been borrowed."
+}
+          </code></pre>
+        </li>
+      </ul>
+    </li>
+    <li>If validations pass, update the book:
+      <ul>
+        <li><code>isBorrowed = true</code></li>
+        <li><code>borrowerName = &lt;value from body&gt;</code></li>
+        <li><code>borrowDate = current date</code></li>
+      </ul>
+    </li>
+    <li>On successful update, send the response with status code <b>200</b>:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "message": "Book borrowed successfully."
+}
+  </code></pre>
+
+  <br />
+
+  <p><strong>4. PATCH <code>/books/return/:id</code></strong> – Return a borrowed book.</p>
+  <ul>
+    <li>Read the <b>id</b> from the route parameter.</li>
+    <li>If the book is not currently borrowed (<code>isBorrowed === false</code>), respond with status code
+      <b>403</b>:
+    </li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "error": "This book is not borrowed currently."
+}
+  </code></pre>
+
+  <ul>
+    <li>If the book is borrowed, update the document:
+      <ul>
+        <li><code>isBorrowed = false</code></li>
+        <li><code>borrowerName = ""</code></li>
+        <li><code>borrowDate = null</code></li>
+      </ul>
+    </li>
+    <li>On successful update, send the response with status code <b>200</b>:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "message": "Book returned successfully."
+}
+  </code></pre>
+
+  <p>If something goes wrong during any of the above operations (borrow/return), send an appropriate error message with
+    status code <b>400</b>.</p>
+
+  <!-- DATABASE -->
+  <h2 class="title">MongoDB Commands</h2>
+  <hr />
+
+  <ul>
+    <li>To open the Mongo shell, run
+      <i class="commands"><strong>mongosh</strong></i> from the terminal.
+    </li>
+    <li>To view the databases in MongoDB, run
+      <i class="commands"><strong>show dbs</strong></i> from the mongo shell.
+    </li>
+    <li>To select the database, run
+      <i class="commands"><strong>use library-db</strong></i>.
+    </li>
+    <li>To view the names of collections, run
+      <i class="commands"><strong>show collections</strong></i>.
+    </li>
+    <li>To view the data in the <b>books</b> collection, run
+      <i class="commands"><strong>db.books.find()</strong></i>.
+    </li>
+    <li>To exit, press
+      <i class="commands"><strong>ctrl+c</strong></i>.
+    </li>
+  </ul>
+
+</body>
+
+<style>
+  body {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  header {
+    background: #3C0E29;
+    color: #E1E0D2;
+    padding: 2px 2px 2px 12px;
+    border-radius: 10px;
+  }
+
+  pre {
+    background: #D0CCD2;
+    padding: 3px;
+    outline: 2px solid #574275;
+    outline-offset: 10px;
+    white-space: pre-wrap;
+  }
+
+  hr {
+    background-color: #574275;
+    height: 2px;
+    margin-bottom: 1em;
+  }
+
+  img {
+    padding: 19px;
+  }
+
+  li {
+    padding: 5px;
+  }
+
+  u {
+    font-size: 20px;
+    color: #BF942E;
+  }
+
+  span {
+    color: #2E67BF;
+    font-weight: 600;
+  }
+
+  .note2 {
+    background-color: lightgrey;
+    width: 600px;
+    border: 5px solid #8c9190;
+    padding: 10px;
+  }
+
+  .header {
+    margin: 0% auto 0 auto;
+    display: grid;
+    background: #574275;
+    padding: 3%;
+    color: white;
+    grid-template-areas: "title video";
+    overflow: scroll;
+  }
+
+  .item1 {
+    grid-area: title;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .item2 {
+    grid-area: video;
+  }
+
+  .item1 span {
+    font-size: 35px;
+    color: white;
+  }
+
+  .note {
+    color: red;
+  }
+
+  .title {
+    color: #2E67BF;
+    font-weight: 600;
+    font-size: 32px;
+  }
+
+  .commands {
+    font-size: 20px;
+    color: #BF502E;
+  }
+
+  .refresh {
+    height: 280px;
+    width: 800px;
+  }
+
+  .warning {
+    color: #BF942E;
+    padding: 10px;
+    margin-top: 4px;
+    border: 2px solid red;
+  }
+</style>
+
+</html>

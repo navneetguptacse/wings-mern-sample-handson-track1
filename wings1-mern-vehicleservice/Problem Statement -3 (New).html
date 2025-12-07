@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <h2 class="title">MERN Stack App</h2>
+  <hr />
+
+  <div class="header">
+    <p class="item1">
+      <span>Vehicle Service Booking System</span><br /><br />
+      Develop this application using <b>ReactJS</b> and <b>NodeJS</b>.
+      Refer to this Problem Statement and the UI GIF for the complete requirements.
+    </p>
+
+    <div class="item2">
+      <!-- Place this GIF in ReactJS/public/assets/service-booking.gif -->
+      <img src="assets/service-booking.gif" width="700" height="350" />
+    </div>
+  </div>
+
+  <h2 class="note">Note:</h2>
+  <hr />
+
+  <ul>
+    <li>To run the Full Stack application, execute the <strong>sh run.sh</strong> command
+      from the <b>wings-reactnode-vehicleservice1</b> directory.</li>
+    <li>To test the Full Stack application, execute the <strong>sh test.sh</strong> command.</li>
+    <li>If <b>test-report.xml</b> does not appear after running tests,
+      click the <strong>Refresh Icon</strong> in VS Code.</li>
+    <img class="refresh" src="assets/RefreshImg.png" />
+    <li>Use <strong>Fetch API</strong> for all service integration calls.</li>
+  </ul>
+
+  <!-- FRONT-END -->
+  <h2 class="title">FRONT-END: ReactJS</h2>
+  <hr />
+
+  <ul>
+    <li>The application uses <b>ReactJS</b> as the front end.</li>
+    <li>You must fix the <b>test cases</b> written in <b>Jest</b> and <b>React Testing Library</b>.</li>
+    <li>Front-end code resides in <b>ReactJS/src/</b> and components in <b>ReactJS/src/components</b>.</li>
+  </ul>
+
+  <h3>App Component:</h3>
+  <ul>
+    <li>Resides in <b>ReactJS/src/App.js</b>.</li>
+    <li>Acts as the main container component.</li>
+    <li>Maintains the following state values:
+      <ul>
+        <li><code>services</code> – service booking list.</li>
+        <li><code>filters</code> – selected filter values (status, date range).</li>
+        <li><code>showModal</code> – boolean to open/close the Add Booking modal.</li>
+        <li><code>formInputs</code> – values for customer name, vehicle number, service type, date, etc.</li>
+        <li><code>error</code> – validation or fetch errors.</li>
+      </ul>
+    </li>
+
+    <li>Functions to be implemented:
+      <ul>
+        <li><b>fetchServices</b> → GET <code>/services</code> with filters.</li>
+        <li><b>updateFilterHandler</b> → handles filter changes and reloads data.</li>
+        <li><b>showModalHandler</b> → opens modal.</li>
+        <li><b>closeModalHandler</b> → closes modal and clears fields.</li>
+        <li><b>inputChangeHandler</b> → updates form inputs on change.</li>
+        <li><b>submitHandler</b> → POST <code>/services</code> to add a booking.</li>
+        <li><b>updateStatusHandler</b> → PATCH <code>/services/updateStatus/:id</code>.</li>
+        <li><b>cancelBookingHandler</b> → PATCH <code>/services/cancel/:id</code>.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Button Component:</h3>
+  <ul>
+    <li>Located at <b>components/Button.js</b>.</li>
+    <li>Reusable button component supporting props: <b>label</b>, <b>onClick</b>, <b>type</b>.</li>
+  </ul>
+
+  <h3>Error Component:</h3>
+  <ul>
+    <li>Located at <b>components/Error.js</b>.</li>
+    <li>Displays error messages. Prop: <b>message</b>.</li>
+  </ul>
+
+  <h3>Modal Component:</h3>
+  <ul>
+    <li>Located at <b>components/Modal.js</b>.</li>
+    <li>Displays modal UI using props: <b>show</b>, <b>children</b>, <b>closeHandler</b>.</li>
+  </ul>
+
+  <h3>Form Component:</h3>
+  <ul>
+    <li>Located at <b>components/Form.js</b>.</li>
+    <li>Contains:
+      <ul>
+        <li><b>Customer Name</b></li>
+        <li><b>Vehicle Number</b></li>
+        <li><b>Service Type</b> (dropdown)</li>
+        <li><b>Preferred Date</b></li>
+      </ul>
+    </li>
+    <li>On Save → Runs validation → Calls <b>onSaveHandler</b>.</li>
+    <li>Props:
+      <b>error</b>, <b>inputOnChangeHandler</b>, <b>onSaveHandler</b>.</li>
+  </ul>
+
+  <h3>FilterBar Component:</h3>
+  <ul>
+    <li>Located at <b>components/FilterBar.js</b>.</li>
+    <li>Filters by:
+      <ul>
+        <li><b>Status</b>: REQUESTED, IN_PROGRESS, COMPLETED, CANCELLED</li>
+        <li><b>Start Date</b></li>
+        <li><b>End Date</b></li>
+      </ul>
+    </li>
+    <li>Prop: <b>onFilterChange</b>.</li>
+  </ul>
+
+  <h3>List Component:</h3>
+  <ul>
+    <li>Located at <b>components/List.js</b>.</li>
+    <li>Renders all service bookings using the Card component.</li>
+    <li>Prop: <b>data</b></li>
+  </ul>
+
+  <h3>Card Component:</h3>
+  <ul>
+    <li>Located at <b>components/Card.js</b>.</li>
+    <li>Displays booking details.</li>
+    <li>Props:
+      <b>_id</b>, <b>customerName</b>, <b>vehicleNumber</b>, <b>serviceType</b>, <b>date</b>, <b>status</b>,
+      <b>isDelayed</b>, <b>onUpdateStatus</b>, <b>onCancel</b>.</li>
+    <li>Buttons:
+      <ul>
+        <li><b>Advance Status</b> (REQUESTED → IN_PROGRESS → COMPLETED)</li>
+        <li><b>Cancel Booking</b></li>
+        <li><b>Mark Delayed</b> when status = IN_PROGRESS</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- BACK-END -->
+  <h2 class="title">BACK-END: NodeJS</h2>
+  <hr />
+
+  <ul>
+    <li>Backend uses <b>NodeJS + MongoDB</b>.</li>
+    <li>Default DB setup exists in <b>NodeJS/src/db/defaultDB.js</b>.</li>
+    <li>Database name: <b>service-db</b></li>
+    <li>Collection name: <b>services</b></li>
+  </ul>
+
+  <h3><strong>Model — service.js</strong></h3>
+  <p>Fields:</p>
+  <ul>
+    <li><b>customerName</b> – String, min length 3, alphabets + spaces only.</li>
+    <li><b>vehicleNumber</b> – String, required, format: XX00XX0000.</li>
+    <li><b>serviceType</b> – String, must be one of:
+      <code>"General Service"</code>, <code>"Oil Change"</code>, <code>"Full Inspection"</code>.</li>
+    <li><b>date</b> – Date, required.</li>
+    <li><b>status</b> – REQUESTED, IN_PROGRESS, COMPLETED, CANCELLED (default REQUESTED).</li>
+    <li><b>isDelayed</b> – Boolean, default false.</li>
+    <li><b>createdAt</b> – Date, auto-generated.</li>
+  </ul>
+
+  <h3><strong>Routers — services.js</strong></h3>
+
+  <p><strong>1. GET <code>/services</code></strong> — Fetch bookings with optional filters:</p>
+  <ul>
+    <li><b>status</b> filter</li>
+    <li><b>start_date</b> filter</li>
+    <li><b>end_date</b> filter</li>
+  </ul>
+  <p><b>Sample Response:</b></p>
+  <pre><code>{
+  "count": 2,
+  "records": [
+    {
+      "_id": "60af33e12345abce1200a001",
+      "customerName": "Rahul Singh",
+      "vehicleNumber": "DL03AB1234",
+      "serviceType": "General Service",
+      "date": "2023-11-12",
+      "status": "REQUESTED",
+      "isDelayed": false
+    }
+  ]
+}
+  </code></pre>
+
+  <p><strong>2. POST <code>/services</code></strong> — Add new service booking.</p>
+  <p>Validations:</p>
+  <ul>
+    <li>customerName ≥ 3 chars</li>
+    <li>vehicleNumber format check</li>
+    <li>serviceType must be valid</li>
+    <li>date must be a valid date</li>
+  </ul>
+  <p><b>Error Response (400):</b></p>
+  <pre><code>{ "error": "Invalid booking details. Please check all fields." }</code></pre>
+
+  <p><b>Success Response (201):</b></p>
+  <pre><code>{
+  "message": "Booking created successfully."
+}
+  </code></pre>
+
+  <p><strong>3. PATCH <code>/services/updateStatus/:id</code></strong></p>
+  <p>Allowed transitions:</p>
+  <ul>
+    <li>REQUESTED → IN_PROGRESS</li>
+    <li>IN_PROGRESS → COMPLETED</li>
+  </ul>
+  <p><b>Error Response (400):</b></p>
+  <pre><code>{ "error": "Invalid status transition." }</code></pre>
+
+  <p><strong>4. PATCH <code>/services/cancel/:id</code></strong></p>
+  <p>Cannot cancel if status = COMPLETED.</p>
+  <p><b>Error Response (403):</b></p>
+  <pre><code>{ "error": "Cannot cancel a completed service." }</code></pre>
+
+  <p><strong>5. PATCH <code>/services/markDelayed/:id</code></strong></p>
+  <p>Allowed only when status = IN_PROGRESS.</p>
+  <p><b>Error Response (400):</b></p>
+  <pre><code>{ "error": "Can be marked delayed only during IN_PROGRESS stage." }</code></pre>
+
+  <!-- DATABASE SECTION -->
+  <h2 class="title">MongoDB Commands</h2>
+  <hr />
+
+  <ul>
+    <li><code>mongosh</code> → open Mongo shell</li>
+    <li><code>show dbs</code></li>
+    <li><code>use service-db</code></li>
+    <li><code>show collections</code></li>
+    <li><code>db.services.find()</code></li>
+    <li><code>ctrl + c</code> → exit</li>
+  </ul>
+
+</body>
+
+
+<style>
+  body {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  pre {
+    background: #D0CCD2;
+    padding: 3px;
+    outline: 2px solid #574275;
+    outline-offset: 10px;
+    white-space: pre-wrap;
+  }
+
+  hr {
+    background-color: #574275;
+    height: 2px;
+    margin-bottom: 1em;
+  }
+
+  img {
+    padding: 19px;
+  }
+
+  li {
+    padding: 5px;
+  }
+
+  .header {
+    background: #574275;
+    color: white;
+    padding: 3%;
+    display: grid;
+    grid-template-areas: "title video";
+  }
+
+  .item1 {
+    grid-area: title;
+    text-align: center;
+  }
+
+  .item1 span {
+    font-size: 35px;
+  }
+
+  .item2 {
+    grid-area: video;
+  }
+
+  .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2E67BF;
+  }
+
+  .commands {
+    color: #BF502E;
+    font-size: 20px;
+  }
+
+  .refresh {
+    height: 280px;
+    width: 800px;
+  }
+</style>
+
+</html>

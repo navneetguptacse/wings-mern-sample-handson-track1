@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <h2 class="title">MERN Stack App</h2>
+  <hr />
+
+  <div class="header">
+    <p class="item1">
+      <span>Warehouse Inventory & Stock Request System</span><br /><br />
+      Develop this application using <b>ReactJS</b> and <b>NodeJS</b>.
+      Refer to this Problem Statement and the provided UI GIF for expected behaviour.
+    </p>
+
+    <div class="item2">
+      <!-- Place this GIF in ReactJS/public/assets/ -->
+      <img src="assets/warehouse-management.gif" width="700" height="350" />
+    </div>
+  </div>
+
+  <h2 class="note">Note:</h2>
+  <hr />
+
+  <ul>
+    <li>To run the full stack application, execute <strong>sh run.sh</strong>
+      from the <b>wings-reactnode-warehouseinventory1</b> directory.</li>
+    <li>To test the application, execute <strong>sh test.sh</strong>.</li>
+    <li>If test-report.xml does not appear, click the <strong>Refresh Icon</strong> in VS Code.</li>
+    <img class="refresh" src="assets/RefreshImg.png" />
+    <li>Use <strong>Fetch API</strong> for all API integrations.</li>
+  </ul>
+
+  <!-- FRONT-END -->
+  <h2 class="title">FRONT-END: ReactJS</h2>
+  <hr />
+
+  <ul>
+    <li>You must fix the <b>Jest test cases</b> in the project.</li>
+    <li>Front-end code is inside <b>ReactJS/src/</b>, components inside
+      <b>ReactJS/src/components</b>.</li>
+  </ul>
+
+  <h3>App Component:</h3>
+  <ul>
+    <li>Resides in <b>ReactJS/src/App.js</b>.</li>
+    <li>Acts as the main controller for:
+      <ul>
+        <li><code>inventory</code> – list of products</li>
+        <li><code>requests</code> – stock request list</li>
+        <li><code>showModal</code> – for Add Product modal</li>
+        <li><code>formInputs</code> – Add Product inputs</li>
+        <li><code>filters</code> – category, minQuantity</li>
+        <li><code>error</code> – validation errors</li>
+      </ul>
+    </li>
+
+    <li>Functions to implement:
+      <ul>
+        <li><b>fetchInventory</b> → GET <code>/inventory</code> with optional filters</li>
+        <li><b>fetchRequests</b> → GET <code>/requests</code></li>
+
+        <li><b>showModalHandler</b> → open product modal</li>
+        <li><b>closeModalHandler</b> → close modal + reset fields</li>
+
+        <li><b>inputChangeHandler</b> → update formInputs</li>
+        <li><b>filterChangeHandler</b> → update filters + fetchInventory</li>
+
+        <li><b>submitHandler</b> → POST <code>/inventory</code> to add product</li>
+
+        <li><b>createRequestHandler</b> → POST <code>/requests</code> to create stock request</li>
+
+        <li><b>updateRequestStatus</b> → PATCH <code>/requests/updateStatus/:id</code>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Modal Component:</h3>
+  <ul>
+    <li>Located at <b>components/Modal.js</b>.</li>
+    <li>Displays modal UI using props:
+      <b>show</b>, <b>children</b>, <b>closeHandler</b>.</li>
+  </ul>
+
+  <h3>Form Component (Add Product):</h3>
+  <ul>
+    <li>Located at <b>components/Form.js</b>.</li>
+    <li>Fields:
+      <ul>
+        <li><b>Product Name</b></li>
+        <li><b>Category</b> (select)</li>
+        <li><b>Quantity</b></li>
+        <li><b>Unit Price</b></li>
+      </ul>
+    </li>
+    <li>On Save → triggers <b>onSaveHandler</b>.</li>
+    <li>Props: <b>error</b>, <b>inputOnChangeHandler</b>, <b>onSaveHandler</b>.</li>
+  </ul>
+
+  <h3>FilterBar Component:</h3>
+  <ul>
+    <li>Located at <b>components/FilterBar.js</b>.</li>
+    <li>Filters inventory by:
+      <ul>
+        <li><b>Category</b></li>
+        <li><b>Minimum Quantity</b></li>
+      </ul>
+    </li>
+    <li>Prop: <b>onFilterChange</b>.</li>
+  </ul>
+
+  <h3>InventoryList Component:</h3>
+  <ul>
+    <li>Located at <b>components/InventoryList.js</b>.</li>
+    <li>Displays list using <b>InventoryCard</b>.</li>
+    <li>Prop: <b>data</b>.</li>
+  </ul>
+
+  <h3>InventoryCard Component:</h3>
+  <ul>
+    <li>Located at <b>components/InventoryCard.js</b>.</li>
+    <li>Props:
+      <b>_id</b>, <b>name</b>, <b>category</b>, <b>quantity</b>, <b>price</b>, <b>onCreateRequest</b></li>
+    <li>Includes:
+      <ul>
+        <li>"Request Stock" button → opens a modal or inline form for quantity request.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>RequestsList Component:</h3>
+  <ul>
+    <li>Located at <b>components/RequestsList.js</b>.</li>
+    <li>Prop: <b>data</b>.</li>
+    <li>Renders <b>RequestCard</b> components.</li>
+  </ul>
+
+  <h3>RequestCard Component:</h3>
+  <ul>
+    <li>Located at <b>components/RequestCard.js</b>.</li>
+    <li>Props:
+      <b>_id</b>, <b>productName</b>, <b>requestedQty</b>,
+      <b>status</b>, <b>onStatusUpdate</b></li>
+    <li>Status flow:
+      <ul>
+        <li>PENDING → APPROVED → COMPLETED</li>
+        <li>PENDING → REJECTED</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- BACK-END -->
+  <h2 class="title">BACK-END: NodeJS</h2>
+  <hr />
+
+  <ul>
+    <li>Use NodeJS + MongoDB.</li>
+    <li>Database: <b>warehouse-db</b></li>
+    <li>Collections:
+      <ul>
+        <li><b>inventory</b></li>
+        <li><b>requests</b></li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3><strong>Model — inventory.js</strong></h3>
+  <ul>
+    <li><b>name</b> – String, min 3 chars</li>
+    <li><b>category</b> – must be one of:
+      <code>"Electronics"</code>, <code>"Furniture"</code>, <code>"Hardware"</code></li>
+    <li><b>quantity</b> – Number ≥ 0</li>
+    <li><b>price</b> – Number ≥ 1</li>
+    <li><b>createdAt</b> – auto date</li>
+  </ul>
+
+  <h3><strong>Model — request.js</strong></h3>
+  <ul>
+    <li><b>productId</b> – ObjectId</li>
+    <li><b>productName</b> – String</li>
+    <li><b>requestedQty</b> – Number ≥ 1</li>
+    <li><b>status</b> – PENDING, APPROVED, REJECTED, COMPLETED</li>
+    <li><b>createdAt</b> – Date</li>
+  </ul>
+
+  <h3><strong>Routers — inventory.js</strong></h3>
+
+  <p><strong>1. GET <code>/inventory</code></strong> — Fetch inventory with optional filters.</p>
+  <ul>
+    <li><b>category</b> filter</li>
+    <li><b>minQty</b> filter</li>
+  </ul>
+  <p><b>Sample Response:</b></p>
+  <pre><code>{
+  "count": 1,
+  "records": [
+    {
+      "_id": "60afabce12003400112277aa",
+      "name": "Steel Rod",
+      "category": "Hardware",
+      "quantity": 150,
+      "price": 120
+    }
+  ]
+}
+  </code></pre>
+
+  <p><strong>2. POST <code>/inventory</code></strong> — Add product.</p>
+  <p>Validation errors return:</p>
+  <pre><code>{ "error": "Invalid product details." }</code></pre>
+
+  <p>Success response:</p>
+  <pre><code>{
+  "message": "Product added successfully."
+}
+  </code></pre>
+
+  <h3><strong>Routers — requests.js</strong></h3>
+
+  <p><strong>3. POST <code>/requests</code></strong> — Create stock request.</p>
+  <p>Validation:</p>
+  <ul>
+    <li>requestedQty ≥ 1</li>
+    <li>product must exist</li>
+  </ul>
+
+  <p><strong>4. GET <code>/requests</code></strong> — Fetch requests list.</p>
+
+  <p><strong>5. PATCH <code>/requests/updateStatus/:id</code></strong></p>
+  <ul>
+    <li>PENDING → APPROVED</li>
+    <li>APPROVED → COMPLETED</li>
+    <li>PENDING → REJECTED</li>
+  </ul>
+
+  <p>Error Response:</p>
+  <pre><code>{ "error": "Invalid status update." }</code></pre>
+
+  <!-- DATABASE SECTION -->
+  <h2 class="title">MongoDB Commands</h2>
+  <hr />
+
+  <ul>
+    <li><code>mongosh</code></li>
+    <li><code>show dbs</code></li>
+    <li><code>use warehouse-db</code></li>
+    <li><code>show collections</code></li>
+    <li><code>db.inventory.find()</code></li>
+    <li><code>db.requests.find()</code></li>
+    <li><code>ctrl + c</code></li>
+  </ul>
+
+</body>
+
+
+<style>
+  body {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  pre {
+    background: #D0CCD2;
+    padding: 3px;
+    outline: 2px solid #574275;
+    outline-offset: 10px;
+    white-space: pre-wrap;
+  }
+
+  hr {
+    background-color: #574275;
+    height: 2px;
+    margin-bottom: 1em;
+  }
+
+  img {
+    padding: 19px;
+  }
+
+  li {
+    padding: 5px;
+  }
+
+  .header {
+    background: #574275;
+    color: white;
+    padding: 3%;
+    display: grid;
+    grid-template-areas: "title video";
+  }
+
+  .item1 {
+    grid-area: title;
+    text-align: center;
+  }
+
+  .item1 span {
+    font-size: 35px;
+  }
+
+  .item2 {
+    grid-area: video;
+  }
+
+  .title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #2E67BF;
+  }
+
+  .commands {
+    color: #BF502E;
+    font-size: 20px;
+  }
+
+  .refresh {
+    height: 280px;
+    width: 800px;
+  }
+</style>
+
+</html>

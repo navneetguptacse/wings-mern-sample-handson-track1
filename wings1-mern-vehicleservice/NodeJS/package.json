@@ -1,0 +1,20 @@
+{
+  "name": "vehicle-service-backend",
+  "version": "1.0.0",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest --runInBand"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.0",
+    "mongoose": "^8.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "nodemon": "^3.1.11",
+    "supertest": "^6.3.3"
+  }
+}
