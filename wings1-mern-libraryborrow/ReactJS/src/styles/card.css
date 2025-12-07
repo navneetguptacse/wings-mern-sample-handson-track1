@@ -1,0 +1,16 @@
+.card {
+  background: #fff;
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  margin: 0 0 4px;
+}
+
+.card-author,
+.card-category,
+.card-status {
+  margin: 2px 0;
+}

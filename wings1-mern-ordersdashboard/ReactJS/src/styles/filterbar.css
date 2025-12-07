@@ -1,0 +1,16 @@
+.filterbar {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-field input,
+.filter-field select {
+  padding: 4px;
+}

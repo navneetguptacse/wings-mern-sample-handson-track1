@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <h2 class="title">MERN Stack App</h2>
+  <hr />
+
+  <div class="header">
+    <p class="item1">
+      <span>Food Delivery Orders Dashboard</span><br /><br />
+      Develop this application using <b>ReactJS</b> and <b>NodeJS</b>. Refer to this Problem Statement (and the
+      accompanying UI GIF) for the complete requirements and expected behaviour.
+    </p>
+
+    <div class="item2">
+      <!-- Place the UI preview GIF in ReactJS/public/assets/ as orders-dashboard.gif -->
+      <img src="assets/orders-dashboard.gif" width="700" height="350" />
+    </div>
+  </div>
+
+  <h2 class="note">Note:</h2>
+  <hr />
+
+  <ul>
+    <li>To run the Full Stack application, execute the <i class="commands"><strong>sh run.sh</strong></i> command from
+      the <b>wings-reactnode-ordersdashboard1</b> directory.</li>
+    <li>To test the Full Stack application, execute the <i class="commands"><strong>sh test.sh</strong></i> command from
+      the <b>wings-reactnode-ordersdashboard1</b> directory.</li>
+    <li>After running the test command, if the <b>test-report.xml</b> file has not appeared either in the <b>NodeJS</b>
+      or <b>ReactJS</b> folder, click the <strong>'Refresh Icon'</strong> in the VS Code editor.</li>
+    <img class="refresh" src="assets/RefreshImg.png" />
+    <li>Use <strong>Fetch API</strong> for all service integration calls from the front-end.</li>
+  </ul>
+
+  <!-- FRONT-END -->
+  <h2 class="title">FRONT-END: ReactJS</h2>
+  <hr />
+
+  <ul>
+    <li>This application uses <b>ReactJS</b> as the front-end framework.</li>
+    <li>You have to fix the <b>test case errors</b> in the application. The test cases are written using
+      <b>Jest</b> and <b>React Testing Library</b>.
+    </li>
+    <li>The code for the front-end part is available in <b><code>ReactJS/src/</code></b> and the components are
+      available in <b><code>ReactJS/src/components</code></b>.</li>
+    <li>Refer to the respective component files for any additional instructions or comments.</li>
+  </ul>
+
+  <h3>App Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/App.js</code></b>.</li>
+    <li>Acts as the higher-order component of the application.</li>
+    <li>Maintains the primary state values required by child components:
+      <ul>
+        <li><code>orders</code> – list of orders fetched from the back-end.</li>
+        <li><code>filters</code> – current filter values (status, min amount, max amount).</li>
+        <li><code>showModal</code> – flag indicating whether the “Add Order” modal is visible.</li>
+        <li><code>formInputs</code> – object storing the form field values for a new order.</li>
+        <li><code>error</code> – error message string, if any.</li>
+      </ul>
+    </li>
+    <li>On mounting, it should fetch the existing list of orders using the <b>fetchOrders</b> function.</li>
+    <li>The following functions must be defined and passed as props to the respective child components:
+      <ul>
+        <li><b>fetchOrders</b> – Fetches orders from the back-end using
+          <code>GET -&gt; (http://localhost:8001/orders)</code>. Applies the current filter values when building the
+          query string. Updates the <code>orders</code> state.
+        </li>
+        <li><b>updateFilterHandler</b> – Handles filter control changes and updates the <code>filters</code> state.
+          After updating filters, it should call <b>fetchOrders</b>.
+        </li>
+        <li><b>showModalHandler</b> – Sets <code>showModal</code> to <code>true</code> to open the “Add Order” modal.
+        </li>
+        <li><b>closeModalHandler</b> – Sets <code>showModal</code> to <code>false</code> and clears any error and form
+          fields.</li>
+        <li><b>inputChangeHandler</b> – Handles <code>onChange</code> events from the form fields and updates
+          <code>formInputs</code>.
+        </li>
+        <li><b>submitHandler</b> – Validates form fields and sends an API request
+          <code>POST -&gt; (http://localhost:8001/orders)</code> to create a new order. On success, the modal should be
+          closed and the list of orders should be refreshed by calling <b>fetchOrders</b>.
+        </li>
+        <li><b>advanceStatusHandler</b> – Sends an API request
+          <code>PATCH -&gt; (http://localhost:8001/orders/updateStatus/:id)</code> to move the order to the next
+          allowed status. On success, refresh the order list.</li>
+        <li><b>cancelOrderHandler</b> – Sends an API request
+          <code>PATCH -&gt; (http://localhost:8001/orders/updateStatus/:id)</code> with status set to
+          <code>"CANCELLED"</code>, when permitted. On success, refresh the order list.</li>
+        <li><b>markDelayedHandler</b> – Sends an API request
+          <code>PATCH -&gt; (http://localhost:8001/orders/markDelayed/:id)</code>. On success, refresh the order list.
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Button Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Button.js</code></b>.</li>
+    <li>Is a reusable button component used to trigger actions like Add, Save, Close, Filter, Advance, Cancel, and Mark
+      Delayed.</li>
+    <li>Should accept props such as <b>label</b>, <b>type</b>, and <b>onClick</b> and render the corresponding button.
+    </li>
+  </ul>
+
+  <h3>Error Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Error.js</code></b>.</li>
+    <li>Displays an error message when one is present.</li>
+    <li>The prop to be passed is <b>message</b>. If <code>message</code> is empty, nothing should be rendered.</li>
+  </ul>
+
+  <h3>Modal Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Modal.js</code></b>.</li>
+    <li>Used to display the “Add Order” form in a popup/modal.</li>
+    <li>Contains the custom Button component to close the modal.</li>
+    <li>The props to be passed from the parent component are <b>show</b>, <b>children</b>, and <b>closeHandler</b>.</li>
+    <li>When <code>show</code> is <code>false</code>, the modal should not be visible.</li>
+  </ul>
+
+  <h3>Form Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Form.js</code></b>.</li>
+    <li>Contains the title in an <code>&lt;h3&gt;</code> tag, such as <b>"Add New Order"</b>.</li>
+    <li>Contains the <b>Error</b> component to display validation or API errors.</li>
+    <li>Contains labels and fields for:
+      <ul>
+        <li><b>Customer Name</b></li>
+        <li><b>Restaurant Name</b></li>
+        <li><b>Items</b> (a comma-separated text field describing ordered items)</li>
+        <li><b>Total Amount</b></li>
+        <li><b>Estimated Delivery Time (minutes)</b></li>
+      </ul>
+    </li>
+    <li>On clicking the <b>Save</b> button, the input should be validated and <b>onSaveHandler</b> should be triggered.
+    </li>
+    <li>The props to be passed are <b>error</b>, <b>inputOnChangeHandler</b>, and <b>onSaveHandler</b>.</li>
+  </ul>
+
+  <h3>FilterBar Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/FilterBar.js</code></b>.</li>
+    <li>Displays filter controls for:
+      <ul>
+        <li><b>Status</b> (dropdown – All, PLACED, PREPARING, OUT_FOR_DELIVERY, DELIVERED, CANCELLED)</li>
+        <li><b>Minimum Amount</b></li>
+        <li><b>Maximum Amount</b></li>
+      </ul>
+    </li>
+    <li>The props to be passed are <b>filters</b> and <b>onFilterChange</b>.</li>
+    <li>On changing any filter input, it should call <b>onFilterChange</b> from the parent.</li>
+  </ul>
+
+  <h3>List Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/List.js</code></b>.</li>
+    <li>Responsible for rendering the list of orders using the <b>Card</b> component.</li>
+    <li>The prop to be passed is <b>data</b> (the array of orders).</li>
+  </ul>
+
+  <h3>Card Component:</h3>
+  <ul>
+    <li>Resides in <b><code>ReactJS/src/components/Card.js</code></b>.</li>
+    <li>Displays the details of a single order in a card layout.</li>
+    <li>The props to be passed are:
+      <b>_id</b>, <b>customerName</b>, <b>restaurantName</b>, <b>items</b>, <b>totalAmount</b>,
+      <b>status</b>, <b>estimatedDeliveryMinutes</b>, <b>isDelayed</b>, <b>borrowedDate</b> (optional display for
+      creation or update time), <b>onAdvanceStatus</b>, <b>onCancel</b>, and <b>onMarkDelayed</b>.
+    </li>
+    <li>The card should:
+      <ul>
+        <li>Display the order status as a label (e.g., “PLACED”, “PREPARING”, etc.).</li>
+        <li>Show a small badge or text (e.g., <b>"Delayed"</b>) if <code>isDelayed</code> is <code>true</code>.</li>
+        <li>Show an <b>Advance Status</b> button when the status can move forward.</li>
+        <li>Show a <b>Cancel Order</b> button when the current status allows cancellation.</li>
+        <li>Show a <b>Mark Delayed</b> button only when the status is <b>PREPARING</b> or
+          <b>OUT_FOR_DELIVERY</b>.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- BACK-END -->
+  <h2 class="title">BACK-END: NodeJS</h2>
+  <hr />
+
+  <ul>
+    <li>For the back-end, use <strong>NodeJS</strong> and <strong>MongoDB</strong>.</li>
+    <li>The sample and default data values are provided in <b><code>NodeJS/src/db/defaultDB.js</code></b>.</li>
+    <li><strong>orders-db</strong> is the name of the database to be used.</li>
+    <li>There is a single collection, <strong>orders</strong>, in the <b>orders-db</b> database.</li>
+  </ul>
+
+  <h3><strong>Models:</strong></h3>
+  <p>
+    The model file is located at <b><code>NodeJS/src/models/order.js</code></b> and contains the following fields:
+  </p>
+  <ul>
+    <li><b>customerName</b> – String, required, minimum length 3, must contain only alphabets and spaces.</li>
+    <li><b>restaurantName</b> – String, required, minimum length 3.</li>
+    <li><b>items</b> – String, required, minimum length 3 (represents a comma-separated list of items).</li>
+    <li><b>totalAmount</b> – Number, required, must be greater than or equal to 0.</li>
+    <li><b>status</b> – String, required, must be one of:
+      <code>"PLACED"</code>, <code>"PREPARING"</code>, <code>"OUT_FOR_DELIVERY"</code>,
+      <code>"DELIVERED"</code>, <code>"CANCELLED"</code>. Default is <code>"PLACED"</code>.
+    </li>
+    <li><b>estimatedDeliveryMinutes</b> – Number, required, must be between 10 and 120.</li>
+    <li><b>isDelayed</b> – Boolean, default value is <code>false</code>.</li>
+    <li><b>createdAt</b> – Date, default is the current date/time.</li>
+  </ul>
+
+  <h3><strong>Routers:</strong></h3>
+
+  <p>The routes are defined in <b><code>NodeJS/src/routers/orders.js</code></b>.</p>
+
+  <p><strong>1. GET <code>/orders</code></strong> – Fetch orders with optional filters.</p>
+  <p>The route should:</p>
+  <ul>
+    <li>Return the list of orders from the <b>orders</b> collection.</li>
+    <li>Support the following optional query parameters:
+      <ul>
+        <li><b>status</b> – returns orders with the given status only.</li>
+        <li><b>min_amount</b> – returns orders with <code>totalAmount</code> greater than or equal to this value.</li>
+        <li><b>max_amount</b> – returns orders with <code>totalAmount</code> less than or equal to this value.</li>
+      </ul>
+    </li>
+    <li>If no query parameters are passed, return all orders.</li>
+    <li>On success, send a response with status code <b>200</b> in the following format:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "count": 3,
+  "records": [
+    {
+      "_id": "60afc1232345cbe12a671001",
+      "customerName": "Riya Sharma",
+      "restaurantName": "Spice Garden",
+      "items": "Paneer Tikka, Butter Naan",
+      "totalAmount": 560,
+      "status": "PLACED",
+      "estimatedDeliveryMinutes": 45,
+      "isDelayed": false,
+      "createdAt": "2023-11-10T10:30:00.000Z"
+    },
+    {
+      "_id": "60afc1232345cbe12a671002",
+      "customerName": "Karan Mehta",
+      "restaurantName": "Burger Point",
+      "items": "Veg Burger, Fries",
+      "totalAmount": 320,
+      "status": "OUT_FOR_DELIVERY",
+      "estimatedDeliveryMinutes": 30,
+      "isDelayed": true,
+      "createdAt": "2023-11-10T10:00:00.000Z"
+    }
+  ]
+}
+  </code></pre>
+
+  <p>If something goes wrong while fetching data from the database, send an error message with status code <b>400</b>:
+  </p>
+  <pre><code class="lang-json">
+{
+  "error": "Unable to fetch order records"
+}
+  </code></pre>
+
+  <br />
+
+  <p><strong>2. POST <code>/orders</code></strong> – Create a new order.</p>
+  <ul>
+    <li>This route should read the data from the request body and create a new document in the <b>orders</b>
+      collection.</li>
+    <li>Validate that:
+      <ul>
+        <li><b>customerName</b>, <b>restaurantName</b>, <b>items</b>, <b>totalAmount</b> and
+          <b>estimatedDeliveryMinutes</b> are present.</li>
+        <li><b>customerName</b> and <b>restaurantName</b> have a length of at least 3 characters.</li>
+        <li><b>customerName</b> contains only alphabets and spaces.</li>
+        <li><b>totalAmount</b> is a number greater than or equal to 0.</li>
+        <li><b>estimatedDeliveryMinutes</b> is between 10 and 120.</li>
+      </ul>
+    </li>
+    <li>The <b>status</b> field should always be set to <code>"PLACED"</code> for newly created orders, regardless of
+      the input.</li>
+    <li>If validation fails, return an error with status code <b>400</b>:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "error": "Invalid order data. Please check all fields."
+}
+  </code></pre>
+
+  <p>If a new order is added successfully, send a response with status code <b>201</b>:</p>
+
+  <pre><code class="lang-json">
+{
+  "message": "Order created successfully.",
+  "order": {
+    "_id": "60afc1232345cbe12a671010",
+    "customerName": "Neha Gupta",
+    "restaurantName": "Pasta House",
+    "items": "White Sauce Pasta, Garlic Bread",
+    "totalAmount": 480,
+    "status": "PLACED",
+    "estimatedDeliveryMinutes": 35,
+    "isDelayed": false,
+    "createdAt": "2023-11-10T11:00:00.000Z"
+  }
+}
+  </code></pre>
+
+  <br />
+
+  <p><strong>3. PATCH <code>/orders/updateStatus/:id</code></strong> – Update the status of an order.</p>
+  <ul>
+    <li>Read the <b>id</b> from the route parameter and the new <b>status</b> from the request body.</li>
+    <li>Allowed status values are:
+      <code>"PLACED"</code>, <code>"PREPARING"</code>, <code>"OUT_FOR_DELIVERY"</code>,
+      <code>"DELIVERED"</code>, <code>"CANCELLED"</code>.
+    </li>
+    <li>The following status transitions are allowed:
+      <ul>
+        <li><code>PLACED -&gt; PREPARING</code></li>
+        <li><code>PREPARING -&gt; OUT_FOR_DELIVERY</code></li>
+        <li><code>OUT_FOR_DELIVERY -&gt; DELIVERED</code></li>
+        <li><code>PLACED -&gt; CANCELLED</code></li>
+        <li><code>PREPARING -&gt; CANCELLED</code></li>
+        <li><code>OUT_FOR_DELIVERY -&gt; CANCELLED</code></li>
+      </ul>
+    </li>
+    <li>If an attempt is made to change status from <code>DELIVERED</code> or <code>CANCELLED</code>, or if the
+      requested transition is not in the above list, return an error with status code <b>400</b>:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "error": "Invalid status transition."
+}
+  </code></pre>
+
+  <ul>
+    <li>If the update is valid and successful, send the response with status code <b>200</b>:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "message": "Order status updated successfully."
+}
+  </code></pre>
+
+  <p>If something goes wrong while updating, send an appropriate error message with status code <b>400</b>.</p>
+
+  <br />
+
+  <p><strong>4. PATCH <code>/orders/markDelayed/:id</code></strong> – Mark an order as delayed.</p>
+  <ul>
+    <li>Read the <b>id</b> from the route parameter.</li>
+    <li>If the current status is <code>"PREPARING"</code> or <code>"OUT_FOR_DELIVERY"</code>, set
+      <code>isDelayed = true</code>.</li>
+    <li>If the status is anything else (including <code>"PLACED"</code>, <code>"DELIVERED"</code> or
+      <code>"CANCELLED"</code>), respond with status code <b>400</b>:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "error": "Order can be marked delayed only when it is preparing or out for delivery."
+}
+  </code></pre>
+
+  <ul>
+    <li>On successful update, send the response with status code <b>200</b>:</li>
+  </ul>
+
+  <pre><code class="lang-json">
+{
+  "message": "Order marked as delayed."
+}
+  </code></pre>
+
+  <!-- DATABASE -->
+  <h2 class="title">MongoDB Commands</h2>
+  <hr />
+
+  <ul>
+    <li>To open the Mongo shell, run <i class="commands"><strong>mongosh</strong></i> from the terminal.</li>
+    <li>To view the databases in MongoDB, run <i class="commands"><strong>show dbs</strong></i> from the mongo shell.
+    </li>
+    <li>To select the database, run <i class="commands"><strong>use orders-db</strong></i>.</li>
+    <li>To view the names of collections, run <i class="commands"><strong>show collections</strong></i>.</li>
+    <li>To view the data in the <b>orders</b> collection, run
+      <i class="commands"><strong>db.orders.find()</strong></i>.
+    </li>
+    <li>To exit, press <i class="commands"><strong>ctrl+c</strong></i>.</li>
+  </ul>
+
+</body>
+
+<style>
+  body {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  pre {
+    background: #D0CCD2;
+    padding: 3px;
+    outline: 2px solid #574275;
+    outline-offset: 10px;
+    white-space: pre-wrap;
+  }
+
+  hr {
+    background-color: #574275;
+    height: 2px;
+    margin-bottom: 1em;
+  }
+
+  img {
+    padding: 19px;
+  }
+
+  li {
+    padding: 5px;
+  }
+
+  span {
+    color: #2E67BF;
+    font-weight: 600;
+  }
+
+  .header {
+    margin: 0% auto 0 auto;
+    display: grid;
+    background: #574275;
+    padding: 3%;
+    color: white;
+    grid-template-areas: "title video";
+    overflow: scroll;
+  }
+
+  .item1 {
+    grid-area: title;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .item2 {
+    grid-area: video;
+  }
+
+  .item1 span {
+    font-size: 35px;
+    color: white;
+  }
+
+  .note {
+    color: red;
+  }
+
+  .title {
+    color: #2E67BF;
+    font-weight: 600;
+    font-size: 32px;
+  }
+
+  .commands {
+    font-size: 20px;
+    color: #BF502E;
+  }
+
+  .refresh {
+    height: 280px;
+    width: 800px;
+  }
+</style>
+
+</html>

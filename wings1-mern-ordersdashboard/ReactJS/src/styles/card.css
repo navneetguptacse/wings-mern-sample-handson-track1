@@ -1,0 +1,44 @@
+.card {
+  background: #fff;
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.delayed-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.card-restaurant,
+.card-items,
+.card-amount,
+.card-eta,
+.card-created {
+  margin: 4px 0;
+}
+
+.card-actions {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

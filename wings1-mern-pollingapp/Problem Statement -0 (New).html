@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MERN Stack Public Polling Application – Problem Statement</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0 1.5rem 2rem;
+    }
+    h1, h2, h3, h4 {
+      font-weight: 700;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    section {
+      margin-top: 2rem;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1rem 0;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 0.4rem 0.6rem;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    th {
+      background: #f0f0f0;
+    }
+    code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+    pre {
+      background: #f8f8f8;
+      border: 1px solid #ccc;
+      padding: 0.75rem;
+      overflow-x: auto;
+      font-size: 0.9rem;
+    }
+    .note {
+      border-left: 4px solid #cc0000;
+      padding-left: 0.75rem;
+      margin: 1rem 0;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>MERN Stack Public Polling Application</h1>
+
+  <section id="intro">
+    <h2>Application Overview</h2>
+    <p>
+      This assessment is a MERN Stack <strong>Public Polling Application</strong>.  
+      The application is expected to be developed using <strong>ReactJS</strong> for the front end and 
+      <strong>NodeJS</strong> with <strong>MongoDB</strong> for the back end.
+    </p>
+    <p>
+      To use your assessment time efficiently, follow the instructions given in this problem statement 
+      and in the provided code snippets. Refer to this document if you need more clarification about
+      any particular section.
+    </p>
+  </section>
+
+  <section id="backend">
+    <h2>BACK-END: NodeJS</h2>
+
+    <ul>
+      <li>Use <strong>NodeJS</strong> and <strong>MongoDB</strong> for back-end purposes.</li>
+      <li>Database name: <code>polling-app</code></li>
+      <li>Collection name: <code>polls</code></li>
+      <li>There will be only <strong>one document</strong> in this collection at any time.</li>
+      <li>By default, one document is stored in the <code>polls</code> collection.  
+          All data manipulations should be carried out on this document only.</li>
+    </ul>
+
+    <h3>Collection</h3>
+    <p>
+      There is a single file for the collection namely <code>polls.js</code> that resides inside 
+      <code>NodeJS/src/mongoose/models</code>. The schema of the collection is as follows.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Sl. No.</th>
+          <th>Field_name</th>
+          <th>Type</th>
+          <th>Validations</th>
+          <th>Required</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>_id (auto-generated)</td>
+          <td>Object ID</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>question</td>
+          <td>String</td>
+          <td>-</td>
+          <td>TRUE</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>option1</td>
+          <td>String</td>
+          <td>-</td>
+          <td>TRUE</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>option2</td>
+          <td>String</td>
+          <td>-</td>
+          <td>TRUE</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>option3</td>
+          <td>String</td>
+          <td>-</td>
+          <td>TRUE</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>option4</td>
+          <td>String</td>
+          <td>-</td>
+          <td>TRUE</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>option1Votes</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>option2Votes</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>option3Votes</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>option4Votes</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>option1Percentage</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>option2Percentage</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>option3Percentage</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>option4Percentage</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>__v (auto-generated)</td>
+          <td>Number</td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Routers</h3>
+    <p>
+      There is a single router file <code>polls.js</code>, residing inside 
+      <code>NodeJS/src/routers</code>, that manages all the app's endpoints.  
+      The endpoints and their functionalities are as follows.
+    </p>
+
+    <h4>1. <code>/polls/create</code> – <em>PUT Method</em></h4>
+    <ul>
+      <li>This route should delete the existing document present inside the <code>polls</code> collection.</li>
+      <li>After deletion, it should save the data that comes in the request body inside the <code>polls</code> collection.</li>
+      <li>If new data is saved successfully, send a response message with status code <strong>201</strong>.</li>
+      <li>
+        If any option is duplicate or if question/options contain only blank spaces, send an error message as
+        response with status code <strong>400</strong>:
+        <pre><code>{
+  "error": "All options must be unique and inputs should not be empty"
+}</code></pre>
+      </li>
+      <li>If something goes wrong while executing the route, send an appropriate error message with status code <strong>400</strong>.</li>
+    </ul>
+
+    <p><strong>Sample request and response:</strong></p>
+    <pre><code>Request --&gt;
+{
+  "question": "Which is the best front-end technology?",
+  "option1": "React",
+  "option2": "Angular",
+  "option3": "Vue",
+  "option4": "Next"
+}
+
+Response --&gt;
+{
+  "message": "Poll created successfully."
+}</code></pre>
+
+    <p><strong>Sample request and error response:</strong></p>
+    <pre><code>Request --&gt;
+{
+  "question": "Which is the best front-end technology?",
+  "option1": "React",
+  "option2": "Angular",
+  "option3": "Vue",
+  "option4": " "
+}
+
+Error response --&gt;
+{
+  "error": "All options must be unique and inputs should not be empty"
+}</code></pre>
+
+    <h4>2. <code>/polls/fetch</code> – <em>GET Method</em></h4>
+    <ul>
+      <li>This route should fetch the data from the <code>polls</code> collection.</li>
+      <li>Get the document from the collection and return it as response with status code <strong>200</strong>.</li>
+      <li>If something goes wrong while fetching data from the database, send an error message with status code <strong>400</strong>.</li>
+      <li>
+        If the collection is empty, return the following error response with status code <strong>400</strong>:
+        <pre><code>{
+  "error": "Poll not found. Please create a poll"
+}</code></pre>
+      </li>
+    </ul>
+
+    <p><strong>Sample success response:</strong></p>
+    <pre><code>{
+  "question": "Which is the best front-end technology?",
+  "option1": "React",
+  "option2": "Angular",
+  "option3": "Vue",
+  "option4": "Next",
+  "option1Votes": 0,
+  "option2Votes": 0,
+  "option3Votes": 0,
+  "option4Votes": 0,
+  "option1Percentage": 0,
+  "option2Percentage": 0,
+  "option3Percentage": 0,
+  "option4Percentage": 0
+}</code></pre>
+
+    <h4>3. <code>/polls/updateVotes</code> – <em>PATCH Method</em></h4>
+    <ul>
+      <li>
+        This route should increment the votes of <strong>selectedOption</strong> by one.  
+        The <code>selectedOption</code> value comes in the request body.
+      </li>
+      <li>After incrementing the votes, calculate the percentages of votes for all options using:</li>
+    </ul>
+
+    <pre><code>option1Percentage = 100 * (option1Votes / (option1Votes + option2Votes + option3Votes + option4Votes))
+option2Percentage = 100 * (option2Votes / (option1Votes + option2Votes + option3Votes + option4Votes))
+option3Percentage = 100 * (option3Votes / (option1Votes + option2Votes + option3Votes + option4Votes))
+option4Percentage = 100 * (option4Votes / (option1Votes + option2Votes + option3Votes + option4Votes))</code></pre>
+
+    <ul>
+      <li>All the percentages should be <strong>rounded off to 2 decimals</strong>.</li>
+      <li>If all the data gets updated in the database successfully, send a response message with status code <strong>200</strong>.</li>
+      <li>If something goes wrong while executing the route, send an error message with status code <strong>400</strong>.</li>
+    </ul>
+
+    <p><strong>Sample request:</strong></p>
+    <pre><code>{
+  "selectedOption": "option1"
+}</code></pre>
+
+    <p><strong>Effect on fields (starting from all zeros):</strong></p>
+    <pre><code>option1Votes: 1
+option2Votes: 0
+option3Votes: 0
+option4Votes: 0
+option1Percentage: 100
+option2Percentage: 0
+option3Percentage: 0
+option4Percentage: 0</code></pre>
+
+    <p><strong>Sample response:</strong></p>
+    <pre><code>{
+  "message": "Vote registered successfully."
+}</code></pre>
+
+  </section>
+
+  <section id="mongodb-commands">
+    <h2>MongoDB Commands</h2>
+    <ul>
+      <li>Open the mongo shell: <code>mongosh</code></li>
+      <li>View all databases: <code>show dbs</code></li>
+      <li>Select the database: <code>use polling-app</code></li>
+      <li>View the names of collections: <code>show collections</code></li>
+      <li>View the data inside the <code>polls</code> collection: <code>db.polls.find()</code></li>
+      <li>Press <kbd>ctrl</kbd> + <kbd>c</kbd> to exit.</li>
+    </ul>
+  </section>
+
+  <section id="frontend">
+    <h2>FRONT-END ReactJS</h2>
+
+    <ul>
+      <li>This application uses <strong>ReactJS</strong> as the front end.</li>
+      <li>You must fix the <strong>testcase errors</strong> in the application.</li>
+      <li>Testing is done with <strong>Jest</strong> and <strong>React Testing Library</strong>.</li>
+      <li>Before submitting, ensure there are <strong>no compilation errors</strong>.</li>
+      <li>The basic code structure for the front-end part is available in <code>ReactJS/src/</code>, and the components are available in <code>ReactJS/src/components</code>.</li>
+      <li>Find additional instructions in the respective component files as needed.</li>
+    </ul>
+
+    <h3>App Component</h3>
+    <ul>
+      <li>Resides in <code>ReactJS/src/App.js</code>.</li>
+      <li>Is the higher-order component.</li>
+      <li>Should display the header that contains links to navigate between pages.</li>
+      <li>Should define the routes for the components <code>CreatePoll</code>, <code>RegisterVote</code>, and <code>ViewResult</code>.</li>
+    </ul>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Route Path</th>
+          <th>Component to map</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>/</code></td>
+          <td>CreatePoll</td>
+        </tr>
+        <tr>
+          <td><code>/register-vote</code></td>
+          <td>RegisterVote</td>
+        </tr>
+        <tr>
+          <td><code>/view-result</code></td>
+          <td>ViewResult</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Create Poll Component</h3>
+    <ul>
+      <li>Used to create a new poll.</li>
+      <li>Resides in <code>ReactJS/src/components/CreatePoll.js</code>.</li>
+      <li>Contains a form to get a <strong>question</strong> and <strong>4 options</strong>.</li>
+      <li>
+        On submit, check if the form is valid.  
+        If any input fields are empty, show an alert:
+        <strong>"Please fill in all the fields"</strong>.
+      </li>
+      <li>
+        On successful validation, send an API request to the backend  
+        <code>PUT -&gt; (http://localhost:8001/polls/create)</code>  
+        with the form inputs in the request body.
+      </li>
+    </ul>
+
+    <p><strong>Sample request body:</strong></p>
+    <pre><code>{
+  question: "Which is the best front-end technology?",
+  option1: "React",
+  option2: "Angular",
+  option3: "Vue",
+  option4: "Next"
+};</code></pre>
+
+    <ul>
+      <li>Display the success message from the backend in an alert window upon successful <strong>PUT</strong> request.</li>
+      <li>If any error is returned as response, display the error message in an alert window.</li>
+      <li>A video is provided in the problem statement demonstrating the expected page behaviour and UI.</li>
+    </ul>
+
+    <h3>Register Vote Component</h3>
+    <ul>
+      <li>Used to register a vote on the poll.</li>
+      <li>Resides in <code>ReactJS/src/components/RegisterVote.js</code>.</li>
+      <li>Should fetch the poll details from the backend when the component initializes.</li>
+      <li>Make an API request to the backend  
+          <code>GET -&gt; (http://localhost:8001/polls/fetch)</code>.</li>
+      <li>Display the poll details (question and options) with the question inside an <code>&lt;h3&gt;</code> tag and the options as buttons.</li>
+      <li>Clicking any option button should trigger an API request to the backend  
+          <code>PATCH -&gt; (http://localhost:8001/polls/updateVotes)</code>  
+          with the option name in the request body.</li>
+    </ul>
+
+    <p><strong>Sample request body for vote registration:</strong></p>
+    <pre><code>{
+  "selectedOption": "option1"
+}</code></pre>
+
+    <ul>
+      <li>Display the success message from the backend in an alert window upon a successful <strong>PATCH</strong> request.</li>
+      <li>If any error is returned as response, display the error message in an alert window.</li>
+      <li>A video is provided in the problem statement demonstrating the expected page behaviour and UI.</li>
+    </ul>
+
+    <h3>View Result Component</h3>
+    <ul>
+      <li>Used to display the total vote count with a <strong>bar chart format</strong>.</li>
+      <li>Resides in <code>ReactJS/src/components/ViewResult.js</code>.</li>
+      <li>Fetch the poll details from the backend when the component initializes.</li>
+      <li>Make an API request to the backend  
+          <code>GET -&gt; (http://localhost:8001/polls/fetch)</code>.</li>
+    </ul>
+
+    <p><strong>Sample response body:</strong></p>
+    <pre><code>{
+  question: "Which is the best front-end technology?",
+  option1: "React",
+  option2: "Angular",
+  option3: "Vue",
+  option4: "Next",
+  option1Votes: 2,
+  option2Votes: 1,
+  option3Votes: 1,
+  option4Votes: 0,
+  option1Percentage: 50,
+  option2Percentage: 25,
+  option3Percentage: 25,
+  option4Percentage: 0
+}</code></pre>
+
+    <ul>
+      <li>Display the question in the respective element.</li>
+      <li>
+        To display each option, use the template 
+        <code>&lt;div className="option"&gt; ... &lt;/div&gt;</code> 
+        to show:
+        <ul>
+          <li>Option name</li>
+          <li>Vote count</li>
+          <li>Vote percentage</li>
+          <li>Progress bar (representing percentage visually)</li>
+        </ul>
+      </li>
+      <li>A screenshot/video in the problem statement illustrates the expected layout of the “Poll Results” page.</li>
+    </ul>
+
+  </section>
+
+</body>
+</html>

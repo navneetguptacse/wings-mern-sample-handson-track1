@@ -1,0 +1,22 @@
+.app-container {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.app-header {
+  background-color: #0056a3;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-nav a {
+  margin-left: 16px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.app-nav a:hover {
+  text-decoration: underline;
+}

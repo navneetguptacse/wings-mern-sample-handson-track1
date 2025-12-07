@@ -1,0 +1,32 @@
+.app-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #574275;
+  color: #fff;
+  padding: 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.app-title {
+  margin: 0;
+}
+
+.app-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.main-content {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
