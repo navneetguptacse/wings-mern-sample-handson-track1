@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const ordersRouter = require("./routers/orders");
-require("./db/defaultDB"); // initialize DB + seed data if any
+require("./db/defaultDB");
 
 const app = express();
 
