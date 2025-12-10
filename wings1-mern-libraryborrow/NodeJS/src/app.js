@@ -1,7 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const booksRouter = require("./routers/books");
-require("./db/defaultDB"); // initialize DB + seed data
+require("./db/defaultDB");
 
 const app = express();
 

@@ -7,7 +7,6 @@
 //    if the collection is empty.
 
 const mongoose = require("mongoose");
-const Book = require("../models/books");
 
 const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/library-db";
 

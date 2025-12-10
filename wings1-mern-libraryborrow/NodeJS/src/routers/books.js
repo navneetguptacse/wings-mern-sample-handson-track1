@@ -1,8 +1,5 @@
 const express = require("express");
 const Book = require("../models/books");
-const dotenv = require("dotenv");
-
-dotenv.config();
 
 const router = express.Router();
 
