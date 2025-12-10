@@ -15,7 +15,6 @@ mongoose
   .connect(MONGO_URI)
   .then(async () => {
     console.log("Connected to MongoDB: library-db");
-    // TODO: Seed default data only if needed.
   })
   .catch((err) => {
     console.error("MongoDB connection error:", err);
